@@ -1,9 +1,5 @@
 #!/usr/bin/env ruby
 
-# TODO: But we could make even better format?
-# Because pauses still don't count
-# eagerly_finish took 179, not 10 + 18
-
 stack = []
 
 # Read from standard input
@@ -56,3 +52,27 @@ end
 # IO.select 55
 # Puma::Client#eagerly_finish;IO.select 10
 # Puma::Client#eagerly_finish;Puma::Client#try_to_finish;BasicSocket#read_nonblock;BasicSocket#__read_nonblock 18
+
+
+### INPUT of rbtrace --slow=100
+# IO.select <0.824050>
+#           Kernel#sleep <1.000291>
+#           Kernel#sleep <1.000246>
+#           Kernel#sleep <0.864987>
+#           Kernel#sleep <0.802881>
+#         Rack::Proxy#call <5.058375>
+#       Rails::Engine#call <5.058540>
+#     Puma::Configuration::ConfigMiddleware#call <5.058627>
+#   Puma::Server#handle_request <5.079132>
+# Puma::Server#process_client <5.079287>
+
+### OUTPUT
+# ?
+
+
+
+# TODO: But we could make even better format?
+# Because pauses still don't count
+# eagerly_finish took 179, not 10 + 18
+
+## TODO: rbtrace with --slow
